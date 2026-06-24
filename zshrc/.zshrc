@@ -57,3 +57,7 @@ setopt hist_find_no_dups
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+export PATH=$PATH:$HOME/go/bin
