@@ -8,7 +8,7 @@ local is_macos = wezterm.target_triple:lower():find("darwin") ~= nil
 local is_linux = wezterm.target_triple:lower():find("linux") ~= nil
 
 -- GENERAL SETTINGS (All Platforms)
-config.color_scheme = "rose-pine-moon"
+config.color_scheme = "Catppuccin Macchiato"
 config.max_fps = 120
 config.font = wezterm.font("CaskaydiaCove NF", { weight = "Medium" })
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
