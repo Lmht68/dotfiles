@@ -7,9 +7,7 @@ local is_windows = wezterm.target_triple:lower():find("windows") ~= nil
 local is_macos = wezterm.target_triple:lower():find("darwin") ~= nil
 local is_linux = wezterm.target_triple:lower():find("linux") ~= nil
 
--- ============================================
 -- GENERAL SETTINGS (All Platforms)
--- ============================================
 config.color_scheme = "rose-pine-moon"
 config.max_fps = 120
 config.font = wezterm.font("CaskaydiaCove NF", { weight = "Medium" })
@@ -28,9 +26,7 @@ config.window_padding = {
   bottom = 0,
 }
 
--- ============================================
 -- DEFAULT SHELL
--- ============================================
 if is_windows then
   config.default_prog = { "pwsh.exe", "-NoLogo" }
   config.default_cwd = "D:/"
@@ -42,9 +38,7 @@ elseif is_linux then
   config.default_cwd = os.getenv("HOME") or "/home"
 end
 
--- ============================================
 -- LAUNCH MENU
--- ============================================
 if is_windows then
   config.launch_menu = {
     {
@@ -73,21 +67,18 @@ elseif is_linux then
   }
 end
 
--- ============================================
 -- TRANSPARENCY & APPEARANCE
--- ============================================
 if is_windows then
   config.win32_system_backdrop = "Acrylic"
   config.window_background_opacity = 0.75
   config.window_frame.font_size = 10.0
 elseif is_macos then
-  config.window_background_opacity = 0.85
+  config.window_background_opacity = 0.9
   config.macos_window_background_blur = 50
-  config.font_size = 15.0
-  config.window_frame.font_size = 13.0
+  config.font_size = 14.0
+  config.window_frame.font_size = 12.0
 elseif is_linux then
-  config.window_background_opacity = 0.75
-  config.background_blur = 30  -- 0-255, lower = more blur
+  config.window_background_opacity = 0.9
   config.font_size = 14.0
   config.window_frame.font_size = 12.0
 end
