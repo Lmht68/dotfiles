@@ -1,0 +1,12 @@
+{
+  "plugins": {
+    "fzf-lua": {
+      "rev": "774150bc05f774af1df614f55d156b3318c6decd",
+      "src": "https://www.github.com/ibhagwan/fzf-lua"
+    },
+    "nvim-tree.lua": {
+      "rev": "7ff7040bf6c246671eb55cb1727de4fd9f92a106",
+      "src": "https://www.github.com/nvim-tree/nvim-tree.lua"
+    }
+  }
+}

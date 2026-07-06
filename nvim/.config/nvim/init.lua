@@ -427,5 +427,65 @@ vim.api.nvim_create_autocmd("FileType", {
 -- ============================================================================
 -- PLUGIN CONFIGS
 -- ============================================================================
+vim.pack.add({
+	"https://www.github.com/nvim-tree/nvim-tree.lua",
+    "https://www.github.com/ibhagwan/fzf-lua",
+})
 
+require("nvim-tree").setup({
+	view = {
+		width = 35,
+	},
+	filters = {
+		dotfiles = false,
+	},
+	renderer = {
+		group_empty = true,
+	},
+})
+vim.keymap.set("n", "<leader>e", function()
+	require("nvim-tree.api").tree.toggle()
+end, { desc = "Toggle NvimTree" })
 
+require("fzf-lua").setup({
+    grep = {
+      rg_opts = table.concat({
+        "--column",
+        "--line-number",
+        "--no-heading",
+        "--color=always",
+        "--smart-case",
+        "--hidden",
+        "--follow",
+        "--glob",
+        "!.git/*",
+      }, " ")
+    }
+})
+vim.keymap.set("n", "<leader>ff", function()
+	require("fzf-lua").files()
+end, { desc = "FZF Files" })
+vim.keymap.set("n", "<leader>fd", function()
+	require("fzf-lua").lgrep_curbuf()
+end, { desc = "FZF Current File" })
+vim.keymap.set("n", "<leader>fg", function()
+	require("fzf-lua").live_grep()
+end, { desc = "FZF Live Grep" })
+vim.keymap.set("n", "<leader>fb", function()
+	require("fzf-lua").buffers()
+end, { desc = "FZF Buffers" })
+vim.keymap.set("n", "<leader>fx", function()
+	require("fzf-lua").diagnostics_document()
+end, { desc = "FZF Diagnostics Document" })
+vim.keymap.set("n", "<leader>fz", function()
+	require("fzf-lua").diagnostics_workspace()
+end, { desc = "FZF Diagnostics Workspace" })
+vim.keymap.set("n", "<leader>fh", function()
+	require("fzf-lua").help_tags()
+end, { desc = "FZF Help Tags" })
+vim.keymap.set("n", "<leader>fk", function()
+  require("fzf-lua").keymaps()
+end, { desc = "FZF Keymaps" })
+vim.keymap.set("n", "<leader>fc", function()
+  require("fzf-lua").commands()
+end, { desc = "FZF Commands" })
