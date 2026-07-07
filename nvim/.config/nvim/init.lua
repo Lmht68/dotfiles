@@ -290,10 +290,56 @@ vim.keymap.set({ "n", "v" }, "<leader>x", '"_d', { desc = "Delete without yankin
 vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
 
-vim.keymap.set("n", "<C-h>", "<cmd>TmuxNavigateLeft<CR>", { desc = "Move to left window/pane" })
-vim.keymap.set("n", "<C-j>", "<cmd>TmuxNavigateDown<CR>", { desc = "Move to bottom window/pane" })
-vim.keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<CR>", { desc = "Move to top window/pane" })
-vim.keymap.set("n", "<C-l>", "<cmd>TmuxNavigateRight<CR>", { desc = "Move to right window/pane" })
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
+if vim.env.TMUX then
+    vim.keymap.set("n", "<C-h>", "<cmd>TmuxNavigateLeft<CR>", { desc = "Move to left window/pane" })
+    vim.keymap.set("n", "<C-j>", "<cmd>TmuxNavigateDown<CR>", { desc = "Move to bottom window/pane" })
+    vim.keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<CR>", { desc = "Move to top window/pane" })
+    vim.keymap.set("n", "<C-l>", "<cmd>TmuxNavigateRight<CR>", { desc = "Move to right window/pane" })
+
+    vim.keymap.set("n", "<leader>gg", function()
+        vim.fn.system({
+            "tmux",
+            "split-window",
+            "-h",
+            "-c",
+            vim.fn.getcwd(),
+            "lazygit; exit",
+        })
+    end, { desc = "Open LazyGit" })
+else
+    vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move left window/pane" })
+    vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Move down window/pane" })
+    vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move up window/pane" })
+    vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move right window/pane" })
+    vim.keymap.set("t", "<C-h>", "<C-\\><C-n><C-w>h", { desc = "Move left window/pane" })
+    vim.keymap.set("t", "<C-j>", "<C-\\><C-n><C-w>j", { desc = "Move down window/pane" })
+    vim.keymap.set("t", "<C-k>", "<C-\\><C-n><C-w>k", { desc = "Move up window/pane" })
+    vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l", { desc = "Move right window/pane" })
+
+    vim.keymap.set("n", "<leader>gg", function()
+        vim.cmd("botright vsplit | terminal lazygit")
+        vim.b.is_lazygit = true
+        vim.opt_local.scrolloff = 0
+        vim.opt_local.sidescrolloff = 0
+        vim.cmd("startinsert")
+    end)
+    vim.api.nvim_create_autocmd("BufEnter", {
+        callback = function(args)
+            if vim.b[args.buf].is_lazygit then
+                vim.cmd("startinsert")
+            end
+        end,
+    })
+    vim.api.nvim_create_autocmd("TermClose", {
+        callback = function(args)
+            if vim.b[args.buf].is_lazygit then
+                vim.api.nvim_win_close(0, false)
+            end
+        end,
+    })
+end
 
 vim.keymap.set("n", "<leader>sv", ":vsplit<CR>", { desc = "Split window vertically" })
 vim.keymap.set("n", "<leader>sh", ":split<CR>", { desc = "Split window horizontally" })
@@ -428,8 +474,10 @@ vim.api.nvim_create_autocmd("FileType", {
 -- PLUGIN CONFIGS
 -- ============================================================================
 vim.pack.add({
+    "https://github.com/christoomey/vim-tmux-navigator",
 	"https://www.github.com/nvim-tree/nvim-tree.lua",
     "https://www.github.com/ibhagwan/fzf-lua",
+    "https://www.github.com/echasnovski/mini.nvim",
 })
 
 require("nvim-tree").setup({
@@ -484,8 +532,28 @@ vim.keymap.set("n", "<leader>fh", function()
 	require("fzf-lua").help_tags()
 end, { desc = "FZF Help Tags" })
 vim.keymap.set("n", "<leader>fk", function()
-  require("fzf-lua").keymaps()
+    require("fzf-lua").keymaps()
 end, { desc = "FZF Keymaps" })
 vim.keymap.set("n", "<leader>fc", function()
-  require("fzf-lua").commands()
+    require("fzf-lua").commands()
 end, { desc = "FZF Commands" })
+
+require("mini.ai").setup({})
+require("mini.comment").setup({})
+require("mini.move").setup({})
+require("mini.surround").setup({})
+require("mini.cursorword").setup({})
+require("mini.indentscope").setup({})
+require("mini.pairs").setup({})
+require("mini.trailspace").setup({})
+require("mini.bufremove").setup({})
+require("mini.notify").setup({})
+require("mini.icons").setup({})
+require("mini.diff").setup({
+	view = {
+		style = "sign",
+		signs = { add = "▎", change = "▎", delete = "▎" },
+	},
+})
+
+

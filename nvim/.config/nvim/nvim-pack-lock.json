@@ -4,9 +4,17 @@
       "rev": "774150bc05f774af1df614f55d156b3318c6decd",
       "src": "https://www.github.com/ibhagwan/fzf-lua"
     },
+    "mini.nvim": {
+      "rev": "d74190c1528aaf12ba5f3a29d03524c6b81e18b3",
+      "src": "https://www.github.com/echasnovski/mini.nvim"
+    },
     "nvim-tree.lua": {
       "rev": "7ff7040bf6c246671eb55cb1727de4fd9f92a106",
       "src": "https://www.github.com/nvim-tree/nvim-tree.lua"
+    },
+    "vim-tmux-navigator": {
+      "rev": "e41c431a0c7b7388ae7ba341f01a0d217eb3a432",
+      "src": "https://github.com/christoomey/vim-tmux-navigator"
     }
   }
 }
