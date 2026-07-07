@@ -219,7 +219,7 @@ local modes = {
     t = " \u{f120} TERMINAL",
 }
 local function mode_icon()
-	local mode = vim.fn.mode()	
+	local mode = vim.fn.mode()
 	return modes[mode] or (" \u{f059} " .. mode)
 end
 
@@ -243,13 +243,13 @@ local active_statusline = table.concat({
     "%{v:lua.file_size()}",
     "%=",
     CLOCK_ICON,
-    " %l:%c  %P ",			
+    " %l:%c  %P ",
 })
 local inactive_statusline = "  %f %h%m%r \u{e0b1} %{v:lua.file_type()} %=  %l:%c   %P "
 local function setup_dynamic_statusline()
 	vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
 		callback = function()
-			vim.opt_local.statusline = active_statusline		
+			vim.opt_local.statusline = active_statusline
         end,
 	})
 	vim.api.nvim_set_hl(0, "StatusLineBold", { bold = true })
@@ -289,8 +289,6 @@ vim.keymap.set({ "n", "v" }, "<leader>x", '"_d', { desc = "Delete without yankin
 
 vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
-
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 if vim.env.TMUX then
     vim.keymap.set("n", "<C-h>", "<cmd>TmuxNavigateLeft<CR>", { desc = "Move to left window/pane" })
@@ -371,7 +369,6 @@ end, { desc = "Toggle diagnostics" })
 -- ============================================================================
 -- AUTOCMDS
 -- ============================================================================
-
 local augroup = vim.api.nvim_create_augroup("UserConfig", { clear = true })
 
 -- Format on save (ONLY real file buffers, ONLY when efm is attached)
