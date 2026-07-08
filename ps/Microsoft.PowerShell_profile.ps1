@@ -10,19 +10,6 @@ Set-PSReadLineOption -EditMode Windows
 
 oh-my-posh init pwsh --config "$HOME\Documents\PowerShell\theme.omp.json" | Invoke-Expression
 
-function workon ($env) {
-    & $env:WORKON_HOME\$env\Scripts\activate.ps1
-}
-
-function Load-MSVC {
-    cmd /c '"C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvarsall.bat" x64 && set' |
-    ForEach-Object {
-        if ($_ -match "^(.*?)=(.*)$") {
-            Set-Item -Path Env:$($matches[1]) -Value $matches[2]
-        }
-    }
-}
-
 function Check-ModuleUpdates {
     $modules = @(
         'posh-git',
