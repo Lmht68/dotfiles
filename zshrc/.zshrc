@@ -48,5 +48,5 @@ export PATH="/home/linuxbrew/.linuxbrew/bin:$HOME/.local/bin:$PATH"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # Generated for Go & envman
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-[[ -d "$HOME/go/bin" ]] && export PATH="$PATH:$HOME/go/bin"
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh" || true
+[[ -d "$HOME/go/bin" ]] && export PATH="$PATH:$HOME/go/bin" || true
