@@ -1,19 +1,6 @@
 # path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# add the local and homebrew bin folders to $PATH
-export PATH="/home/linuxbrew/.linuxbrew/bin:$HOME/.local/bin:$PATH"
-
-# java path
-export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-export PATH=$JAVA_HOME/bin:$PATH
-
-# config python virtualenvwrapper
-export WORKON_HOME=$HOME/.virtualenvs
-export VIRTUALENVWRAPPER_PYTHON=$HOME/.virtualenvs/venv/bin/python
-export VIRTUALENVWRAPPER_VIRTUALENV=$HOME/.virtualenvs/venv/bin/virtualenv
-source $HOME/.virtualenvs/venv/bin/virtualenvwrapper.sh
-
 # add this to solve warnings from zsh-syntax-highlighting plugin
 zle -N menu-search
 zle -N recent-paths
@@ -26,7 +13,7 @@ ZSH_THEME="agnoster"
 plugins=(git vscode tmux z zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
-# completion
+# auto-completion
 autoload -Uz compinit
 if [[ -n $HOME/.cache/zsh/zcompdump-$ZSH_VERSION ]]; then
 	compinit -d "$HOME/.cache/zsh/zcompdump-$ZSH_VERSION"
@@ -56,8 +43,10 @@ setopt hist_find_no_dups
 # config fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# add the local and homebrew bin folders to $PATH
+export PATH="/home/linuxbrew/.linuxbrew/bin:$HOME/.local/bin:$PATH"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-# Generated for envman. Do not edit.
+# Generated for Go & envman
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-export PATH=$PATH:$HOME/go/bin
+[[ -d "$HOME/go/bin" ]] && export PATH="$PATH:$HOME/go/bin"
