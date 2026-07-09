@@ -491,6 +491,8 @@ vim.pack.add({
 	"https://github.com/folke/which-key.nvim.git",
 })
 
+require("which-key").setup({})
+
 require("nvim-tree").setup({
 	view = {
 		width = 35,
