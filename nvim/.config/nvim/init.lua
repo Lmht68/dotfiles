@@ -482,6 +482,7 @@ vim.pack.add({
 	-- Language Server Protocols
 	"https://www.github.com/neovim/nvim-lspconfig",
 	"https://github.com/mason-org/mason.nvim",
+	"https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim.git",
 	"https://github.com/creativenull/efmls-configs-nvim",
 	{
 		src = "https://github.com/saghen/blink.cmp",
@@ -617,6 +618,34 @@ end
 setup_treesitter()
 
 require("mason").setup({})
+
+require("mason-tool-installer").setup({
+	ensure_installed = {
+		"black",
+		"clang-format",
+		"clangd",
+		"cpplint",
+		"docker-language-server",
+		"efm",
+		"eslint-lsp",
+		"eslint_d",
+		"fixjson",
+		"flake8",
+		"gofumpt",
+		"jdtls",
+		"lua-language-server",
+		"luacheck",
+		"prettierd",
+		"pyright",
+		"python-lsp-server",
+		"revive",
+		"shellcheck",
+		"shfmt",
+		"sqls",
+		"stylua",
+		"typescript-language-server",
+	},
+})
 
 -- ============================================================================
 -- LSP, Linting, Formatting & Completion
