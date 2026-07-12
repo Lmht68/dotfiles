@@ -882,20 +882,12 @@ vim.lsp.config["*"] = {
 -- ============================================================================
 -- FLOATING TERMINAL
 -- ============================================================================
+local term_shell
 if vim.fn.has("win32") == 1 then
-	termshell = { "pwsh.exe", "-NoLogo" }
+	term_shell = { "pwsh.exe", "-NoLogo" }
 else
-	termshell = { vim.o.shell }
+	term_shell = { vim.o.shell }
 end
-
-vim.api.nvim_create_autocmd("TermClose", {
-	group = augroup,
-	callback = function()
-		if vim.v.event.status == 0 then
-			vim.api.nvim_buf_delete(0, {})
-		end
-	end,
-})
 
 vim.api.nvim_create_autocmd("TermOpen", {
 	group = augroup,
@@ -942,24 +934,11 @@ local function FloatingTerminal()
 
 	local has_terminal = vim.bo[terminal_state.buf].buftype == "terminal"
 	if not has_terminal then
-		vim.fn.termopen(termshell)
+		vim.fn.termopen(term_shell)
 	end
 
 	terminal_state.is_open = true
 	vim.cmd("startinsert")
-
-	local term_augroup = vim.api.nvim_create_augroup("FloatingTermLeave_" .. terminal_state.win, { clear = true })
-	vim.api.nvim_create_autocmd("BufLeave", {
-		group = term_augroup,
-		buffer = terminal_state.buf,
-		callback = function()
-			if terminal_state.is_open and terminal_state.win and vim.api.nvim_win_is_valid(terminal_state.win) then
-				vim.api.nvim_win_close(terminal_state.win, false)
-				terminal_state.is_open = false
-			end
-		end,
-		once = true,
-	})
 end
 
 vim.keymap.set("n", "<leader>t", FloatingTerminal, { noremap = true, silent = true, desc = "Toggle floating terminal" })
