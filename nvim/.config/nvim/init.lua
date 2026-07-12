@@ -882,6 +882,12 @@ vim.lsp.config["*"] = {
 -- ============================================================================
 -- FLOATING TERMINAL
 -- ============================================================================
+if vim.fn.has("win32") == 1 then
+	termshell = { "pwsh.exe", "-NoLogo" }
+else
+	termshell = { vim.o.shell }
+end
+
 vim.api.nvim_create_autocmd("TermClose", {
 	group = augroup,
 	callback = function()
@@ -936,7 +942,7 @@ local function FloatingTerminal()
 
 	local has_terminal = vim.bo[terminal_state.buf].buftype == "terminal"
 	if not has_terminal then
-		vim.fn.termopen(os.getenv("SHELL"))
+		vim.fn.termopen(termshell)
 	end
 
 	terminal_state.is_open = true
